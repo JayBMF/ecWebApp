@@ -20,8 +20,7 @@ public class AdminCategoryServlet extends HttpServlet {
         }
         switch (path){
             case "/Index":
-//                Category c = new Category(1,"Sách");
-//                request.setAttribute("category", c);
+
 
                 List<Category> list = CategoryModel.findAll();
                 request.setAttribute("categories", list);
@@ -31,7 +30,21 @@ public class AdminCategoryServlet extends HttpServlet {
                 ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
                 break;
             case "/Edit":
-                ServletUtils.forward("/Views/vwCategory/Edit.jsp", request, response);
+                int id=0;
+                try {
+                    id = Integer.parseInt(request.getParameter("id"));
+                }catch (NumberFormatException e){
+
+                }
+                Category c= CategoryModel.findById(id);
+                if (c != null){
+                    request.setAttribute("category", c);
+                    ServletUtils.forward("/Views/vwCategory/Edit.jsp", request,response);
+                }else {
+                    ServletUtils.redirect("/Admin/Category", request, response);
+//                    ServletUtils.redirect("/Views/204.jsp", request, response);
+                }
+
                 break;
             default:
                 ServletUtils.forward("/Views/404.jsp", request,response);

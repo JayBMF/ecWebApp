@@ -28,7 +28,20 @@ public class CategoryModel {
                     .addParameter("catname", c.getCatName())
                     .executeUpdate();
         }
+    }
 
+    public static Category findById(int id){
 
+        final String sql= "select * from categories where CatID= (:CatID)";
+        try (Connection con= DbUtils.getConnection()) {
+            List<Category> list= con.createQuery(sql)
+                    .addParameter("CatID", id)
+                    .executeAndFetch(Category.class);
+
+            if (list.size()==0){
+                return null;
+            }
+            return list.get(0);
+        }
     }
 }
