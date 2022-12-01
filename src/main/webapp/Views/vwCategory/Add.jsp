@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="txtCatName">Category</label>
-                        <input type="text" class="form-control" id="txtCatName" placeholder="Laptop" autofocus>
+                        <input type="text" class="form-control" id="txtCatName" placeholder="Laptop" name="CatName" autofocus>
                     </div>
                 </div>
                 <div class="card-footer text-muted">

@@ -38,6 +38,17 @@ public class AdminCategoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String path= request.getPathInfo();
+        switch (path){
+            case "/Add":
+                String name= request.getParameter("CatName");
+                Category c= new Category(name);
+                CategoryModel.add(c);
+                ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
+                break;
+            default:
+                ServletUtils.forward("/Views/404.jsp", request,response);
+                break;
+        }
     }
 }
