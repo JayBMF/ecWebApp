@@ -8,7 +8,7 @@
   <jsp:body>
     <div class="card">
       <h4 class="card-header">
-        Products
+        Products (Admin)
       </h4>
       <c:choose>
         <c:when test="${products.size()==0}">
