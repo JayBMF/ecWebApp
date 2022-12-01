@@ -30,6 +30,9 @@ public class AdminCategoryServlet extends HttpServlet {
             case "/Add":
                 ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
                 break;
+            case "/Edit":
+                ServletUtils.forward("/Views/vwCategory/Edit.jsp", request, response);
+                break;
             default:
                 ServletUtils.forward("/Views/404.jsp", request,response);
                 break;
