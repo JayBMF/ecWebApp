@@ -25,11 +25,11 @@
             <i class="fa fa-backward" aria-hidden="true"></i>
             Back
           </a>
-          <button type="submit" class="btn btn-danger">
+          <button type="submit" class="btn btn-danger" formaction="${pageContext.request.contextPath}/Admin/Category/Delete">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
             Delete
           </button>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/Admin/Category/Update">
             <i class="fa fa-check" aria-hidden="true"></i>
             Save
           </button>

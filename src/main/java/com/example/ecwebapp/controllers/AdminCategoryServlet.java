@@ -57,14 +57,38 @@ public class AdminCategoryServlet extends HttpServlet {
         String path= request.getPathInfo();
         switch (path){
             case "/Add":
-                String name= request.getParameter("CatName");
-                Category c= new Category(name);
-                CategoryModel.add(c);
-                ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
+                addCategory(request, response);
+                break;
+            case "/Delete":
+                deleteCategory(request,response);
+                break;
+            case "/Update":
+                updateCategory(request,response);
                 break;
             default:
                 ServletUtils.forward("/Views/404.jsp", request,response);
                 break;
         }
+    }
+
+    private static void addCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name= request.getParameter("CatName");
+        Category c= new Category(name);
+        CategoryModel.add(c);
+        ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
+    }
+
+    private static void updateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id= Integer.parseInt(request.getParameter("CatID"));
+        String name= request.getParameter("CatName");
+        Category c= new Category(id, name);
+        CategoryModel.update(c);
+        ServletUtils.redirect("/Admin/Category", request, response);
+    }
+
+    private static void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id= Integer.parseInt(request.getParameter("CatID"));
+        CategoryModel.delete(id);
+        ServletUtils.redirect("/Admin/Category", request, response);
     }
 }

@@ -30,6 +30,27 @@ public class CategoryModel {
         }
     }
 
+    public static void update(Category c){
+
+        String sql = "update categories set CatName= :CatName where CatID= :CatID";
+
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("CatID", c.getCatID())
+                    .addParameter("CatName", c.getCatName())
+                    .executeUpdate();
+        }
+    }
+
+    public static void delete(int id){
+        String sql = "delete from categories where CatID= :CatID";
+        try (Connection con = DbUtils.getConnection()) {
+            con.createQuery(sql)
+                    .addParameter("CatID", id)
+                    .executeUpdate();
+        }
+    }
+
     public static Category findById(int id){
 
         final String sql= "select * from categories where CatID= (:CatID)";
