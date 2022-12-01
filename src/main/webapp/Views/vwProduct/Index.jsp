@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -8,7 +8,7 @@
   <jsp:body>
     <div class="card">
       <h4 class="card-header">
-        Products (Admin)
+        Products Consume
       </h4>
       <c:choose>
         <c:when test="${products.size()==0}">
@@ -31,7 +31,7 @@
               <tbody>
               <c:forEach items="${products}" var="p">
                 <tr>
-                  <td scope="row" class="text-center">${p.proID}</td>
+                  <td class="text-center">${p.proID}</td>
                   <td>${p.proName}</td>
                   <td>${p.tinyDes}</td>
                   <td class="text-right">
