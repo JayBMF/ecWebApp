@@ -23,7 +23,7 @@
               <c:forEach items="${products}" var="p">
                 <div class="col-sm-4 mb-3">
                   <div class="card h-100">
-                    <img src="${pageContext.request.contextPath}/public/imgs/sp/1/main_thumbs.jpg" alt="${p.proName}" title="${p.proName}" class="card-img-top">
+                    <img src="${pageContext.request.contextPath}/public/imgs/sp/${p.proID}/main_thumbs.jpg" alt="${p.proName}" title="${p.proName}" class="card-img-top">
                     <div class="card-body">
                       <h4 class="card-title">${p.proName}</h4>
                       <h5 class="card-title text-danger">
@@ -32,7 +32,7 @@
                       <p class="card-text">${p.tinyDes}</p>
                     </div>
                     <div class="card-footer text-muted">
-                      <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                      <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/Product/Detail?id=${p.proID}" role="button">
                         <i class="fa fa-eye" aria-hidden="true"></i>
                         Details
                       </a>

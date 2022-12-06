@@ -54,43 +54,7 @@ public class AdminProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path= request.getPathInfo();
-        switch (path){
-            case "/Add":
-                addProduct(request, response);
-                break;
-            case "/Delete":
-                deleteProduct(request,response);
-                break;
-            case "/Update":
-                updateProduct(request,response);
-                break;
-            default:
-                ServletUtils.forward("/Views/404.jsp", request,response);
-                break;
-        }
-    }
-    private static void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name= request.getParameter("ProName");
-        Category c= new Category(name);
-        CategoryModel.add(c);
-        ServletUtils.forward("/Views/vwCategory/Add.jsp", request, response);
+
     }
 
-    private static void updateProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id= Integer.parseInt(request.getParameter("ProID"));
-        String name= request.getParameter("ProName");
-        String des= request.getParameter("TinyDes");
-        int price= Integer.parseInt(request.getParameter("Price"));
-        int quantity= Integer.parseInt(request.getParameter("Quantity"));
-////        Product p= new Product(id, name, des,price,quantity);
-//        ProductModel.update(p);
-//        ServletUtils.redirect("/Admin/Product", request, response);
-    }
-
-    private static void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id= Integer.parseInt(request.getParameter("CatID"));
-        CategoryModel.delete(id);
-        ServletUtils.redirect("/Admin/Category", request, response);
-    }
 }
