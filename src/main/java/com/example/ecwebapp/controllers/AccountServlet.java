@@ -11,7 +11,6 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -26,7 +25,12 @@ public class AccountServlet extends HttpServlet {
                 break;
 
             case "/Login":
-                ServletUtils.forward("/Views/vwAccount/Login.jsp", request, response);
+                HttpSession session= request.getSession();
+                if ((boolean) session.getAttribute("auth")){
+                    ServletUtils.redirect("/Home", request, response);
+                }else {
+                    ServletUtils.forward("/Views/vwAccount/Login.jsp", request, response);
+                }
                 break;
 
             case "/Profile":
@@ -63,6 +67,9 @@ public class AccountServlet extends HttpServlet {
             case "/Login":
                 login(request,response);
                 break;
+            case "/Logout":
+                logout(request,response);
+                break;
 
             default:
                 ServletUtils.forward("/Views/404.jsp", request,response);
@@ -90,8 +97,43 @@ public class AccountServlet extends HttpServlet {
 
 
     private static void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        int id= Integer.parseInt(request.getParameter("CatID"));
-//        CategoryModel.delete(id);
-//        ServletUtils.redirect("/Admin/Category", request, response);
+        String username= request.getParameter("username");
+        String password= request.getParameter("password");
+
+        User user= UserModel.findByUsername(username);
+        if(user!=null){
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+            if (result.verified){
+                HttpSession session = request.getSession();
+                session.setAttribute("auth", true);
+                session.setAttribute("authUser", user);
+
+                String url= (String) session.getAttribute("retUrl");
+                if (url==null){
+                    url="/Home";
+                }
+                ServletUtils.redirect(url, request,response);
+            }else {
+                request.setAttribute("hasError", true);
+                request.setAttribute("errorMessage", "Invalid login.");
+                ServletUtils.forward("/Views/vwAccount/Login.jsp", request, response);
+            }
+        } else {
+            request.setAttribute("hasError", true);
+            request.setAttribute("errorMessage", "Invalid login.");
+            ServletUtils.forward("/Views/vwAccount/Login.jsp", request, response);
+        }
+    }
+
+    private static void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("auth", false);
+        session.setAttribute("authUser", new User());
+
+        String url= request.getHeader("referer");
+        if (url==null){
+            url= "/Home";
+        }
+        ServletUtils.redirect(url, request,response);
     }
 }
